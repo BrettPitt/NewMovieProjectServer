@@ -49,6 +49,22 @@ app.post('/NewMovieWorld', (req, res) => {
     });
 });
 
+app.get('/NewMovieWorld', (req, res) => {
+    collection.find({}).toArray(function(err, result) {
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
+app.delete('/NewMovieWorld/:id', (req, res) => {
+    const query = { _id: new mongodb.ObjectID(req.params.id) };
+    collection.deleteOne(query, function(err, obj) {
+        if (err) throw err;
+        res.send({result: 'Movie deleted'});
+    });
+});
+
+
 
 /**
  * Start server
