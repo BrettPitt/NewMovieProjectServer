@@ -1,6 +1,3 @@
-
-
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongodb = require('mongodb');
@@ -26,29 +23,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-
-// Connect to database
-MongoClient.connect(url, {useUnifiedTopology: true}, function (err, connection) {
-    if (err) throw err;
-    db = connection.db(dbName);
-    collection = db.collection(collectionName);
-});
-
-
-app.get('/', (req, res) => {
-    res.send('Hello dear User');
-});
-
-
-app.post('/NewMovieWorld', (req, res) => {
-    console.log('im posting into mongoDB right now');
-    const todo = req.body;
-    collection.insertOne(todo, function (err, result) {
-        if (err) throw err;
-        res.send({result: 'favorite inserted', todo: todo});
-    });
-});
-
+//return movies
 app.get('/NewMovieWorld', (req, res) => {
     collection.find({}).toArray(function(err, result) {
         if (err) throw err;
@@ -56,6 +31,43 @@ app.get('/NewMovieWorld', (req, res) => {
     });
 });
 
+
+
+
+
+
+
+
+
+
+
+app.post('/favouritList', (req, res) => {
+    console.log('im posting into mongoDB right now');
+    const favouritList = req.body;
+    collection.insertOne(favouritList, function (err, result) {
+        if (err) throw err;
+        res.send({result: 'favorite inserted', favouritList: favouritList});
+    });
+});
+//                                              hier ist noch ein fehler todo wurde nicht angepasst
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//delete a favourite movie
 app.delete('/NewMovieWorld/:id', (req, res) => {
     const query = { _id: new mongodb.ObjectID(req.params.id) };
     collection.deleteOne(query, function(err, obj) {
@@ -63,6 +75,34 @@ app.delete('/NewMovieWorld/:id', (req, res) => {
         res.send({result: 'Movie deleted'});
     });
 });
+
+
+// /** create db
+//  *
+//  */
+// MongoClient.connect(url, function(err, connection) {
+//     if (err) throw err;
+//     let dbo = connection.db("NewMovieWorld");
+//     dbo.createCollection(collectionName, function(err, res) {
+//         if (err) throw err;
+//         console.log("Collection created!");
+//         // connection.close();
+//     });
+//
+//     collection = dbo.collection(collectionName);
+// });
+
+
+
+
+
+
+
+app.get('/', (req, res) => {
+    res.send('Hello dear User');
+});
+
+
 
 
 
