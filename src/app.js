@@ -49,7 +49,7 @@ app.post('/favouritList', (req, res) => {
         res.send({result: 'favorite inserted', favouritList: favouritList});
     });
 });
-//                                              hier ist noch ein fehler todo wurde nicht angepasst
+//                                              hier ist noch ein fehler t.o.d.o. wurde nicht angepasst
 
 
 
