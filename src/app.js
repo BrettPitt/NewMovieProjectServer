@@ -47,6 +47,7 @@ app.post('/favouritList', (req, res) => {
     collection.insertOne(favouritList, function (err, result) {
         if (err) throw err;
         res.send({result: 'favorite inserted', favouritList: favouritList});
+        // console.log(favouritList.toString())
     });
 });
 //                                              hier ist noch ein fehler t.o.d.o. wurde nicht angepasst
@@ -77,20 +78,20 @@ app.delete('/NewMovieWorld/:id', (req, res) => {
 });
 
 
-// /** create db
-//  *
-//  */
-// MongoClient.connect(url, function(err, connection) {
-//     if (err) throw err;
-//     let dbo = connection.db("NewMovieWorld");
-//     dbo.createCollection(collectionName, function(err, res) {
-//         if (err) throw err;
-//         console.log("Collection created!");
-//         // connection.close();
-//     });
-//
-//     collection = dbo.collection(collectionName);
-// });
+/** create db
+ *
+ */
+MongoClient.connect(url, function(err, connection) {
+    if (err) throw err;
+    let dbo = connection.db("NewMovieWorld");
+    dbo.createCollection(collectionName, function(err, res) {
+        if (err) throw err;
+        console.log("Collection created!");
+        // connection.close();
+    });
+
+    collection = dbo.collection(collectionName);
+});
 
 
 
