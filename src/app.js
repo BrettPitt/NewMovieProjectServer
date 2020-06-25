@@ -23,24 +23,21 @@ app.use(function (req, res, next) {
     next();
 });
 
-//return movies
-app.get('/NewMovieWorld', (req, res) => {
+//greeting message io localhost:3000
+app.get('/', (req, res) => {
+    res.send('Hello dear User');
+});
+
+//return favourit list
+app.get('/favouritList', (req, res) => {
+    console.log('trying to get data from mongodb')
     collection.find({}).toArray(function(err, result) {
         if (err) throw err;
         res.send(result);
     });
 });
 
-
-
-
-
-
-
-
-
-
-
+// post a movie to DB
 app.post('/favouritList', (req, res) => {
     console.log('im posting into mongoDB right now');
     const favouritList = req.body;
@@ -50,26 +47,10 @@ app.post('/favouritList', (req, res) => {
         // console.log(favouritList.toString())
     });
 });
-//                                              hier ist noch ein fehler t.o.d.o. wurde nicht angepasst
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //delete a favourite movie
-app.delete('/NewMovieWorld/:id', (req, res) => {
+app.delete('/favouritList/:id', (req, res) => {
+    console.log('try to delete a movie')
     const query = { _id: new mongodb.ObjectID(req.params.id) };
     collection.deleteOne(query, function(err, obj) {
         if (err) throw err;
@@ -78,9 +59,7 @@ app.delete('/NewMovieWorld/:id', (req, res) => {
 });
 
 
-/** create db
- *
- */
+//create db
 MongoClient.connect(url, function(err, connection) {
     if (err) throw err;
     let dbo = connection.db("NewMovieWorld");
@@ -94,22 +73,7 @@ MongoClient.connect(url, function(err, connection) {
 });
 
 
-
-
-
-
-
-app.get('/', (req, res) => {
-    res.send('Hello dear User');
-});
-
-
-
-
-
-/**
- * Start server
- */
+// start server
 app.listen(port, () => {
     console.log(`Favorite app listening at http://localhost:${port}`);
 });
