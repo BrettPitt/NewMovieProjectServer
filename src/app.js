@@ -12,9 +12,8 @@ const collectionName = 'favouritList';
 let db = undefined;
 let collection = undefined;
 
-/**
- * Setup express middleware
- */
+
+//setup express middleware
 app.use(bodyParser.json());
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -58,7 +57,6 @@ app.delete('/favouritList/:id', (req, res) => {
     });
 });
 
-
 //create db
 MongoClient.connect(url, function(err, connection) {
     if (err) throw err;
@@ -68,10 +66,8 @@ MongoClient.connect(url, function(err, connection) {
         console.log("Collection created!");
         // connection.close();
     });
-
     collection = dbo.collection(collectionName);
 });
-
 
 // start server
 app.listen(port, () => {
